@@ -66,6 +66,16 @@ export class appInterceptor implements HttpInterceptor {
       headers: authRequest.headers.set("Accept-Language", this.getAcceptLanguageHeader() || ""),
     });
 
+    if (this.authenticationService.chained_session) {
+      let clonedRequest = httpRequest.clone({
+        headers: httpRequest.headers
+          .set('x-token', `${this.authenticationService.chained_session.token_id}:${this.authenticationService.chained_session.token_id_ans}`)
+          .set('Accept-Language', this.getAcceptLanguageHeader() || ''),
+      });
+      this.authenticationService.chained_session = null
+      return next.handle(clonedRequest);
+    }
+
     if (httpRequest.url.includes("api/signup") || httpRequest.url.endsWith("api/auth/receiptauth") && !this.authenticationService.session || protectedUrls.includes(httpRequest.url)) {
       return this.httpClient.post("api/auth/token", {}).pipe(
         switchMap((response) =>

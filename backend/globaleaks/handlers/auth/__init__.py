@@ -17,6 +17,7 @@ from globaleaks.settings import Settings
 from globaleaks.state import State
 from globaleaks.utils.crypto import Base64Encoder, GCE
 from globaleaks.utils.utility import datetime_now, deferred_sleep, uuid4
+from globaleaks.state import State
 
 
 def db_login_failure(session, tid, whistleblower=False):
@@ -254,11 +255,12 @@ class SessionHandler(BaseHandler):
     """
     check_roles = {'user', 'whistleblower'}
 
-    def get(self):
+    def post(self):
         """
         Refresh and retrive session
         """
-        return self.session.serialize()
+        self.session.chained_token_pending = True
+        return State.tokens.new(self.request.tid, self.session).serialize()
 
     @inlineCallbacks
     def delete(self):

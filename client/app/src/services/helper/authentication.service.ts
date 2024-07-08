@@ -10,11 +10,13 @@ import {TitleService} from "@app/shared/services/title.service";
 import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {OtkcAccessComponent} from "@app/shared/modals/otkc-access/otkc-access.component";
+import {TokenResponse} from "@app/models/authentication/token-refresh";
 
 @Injectable({
   providedIn: "root"
 })
 export class AuthenticationService {
+  public chained_session:TokenResponse | null = null
   public session: any = undefined;
   permissions: { can_upload_files: boolean }
   loginInProgress: boolean = false;
