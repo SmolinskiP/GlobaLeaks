@@ -132,7 +132,7 @@ class BaseHandler(object):
             try:
                 self.token = self.state.tokens.validate(token)
                 if self.token.session is not None:
-                    if self.token.session.chained_token_pending is True:
+                    if self.token.session.chained_token_pending is True and session_id.decode() == self.token.session.id:
                         self.token.session.chained_token_pending = False
                     session_id = self.token.session.id.encode()
             except:

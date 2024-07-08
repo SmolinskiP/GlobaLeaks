@@ -70,6 +70,7 @@ export class appInterceptor implements HttpInterceptor {
       let clonedRequest = httpRequest.clone({
         headers: httpRequest.headers
           .set('x-token', `${this.authenticationService.chained_session.token_id}:${this.authenticationService.chained_session.token_id_ans}`)
+          .set('x-session', `${this.authenticationService.session.id}`)
           .set('Accept-Language', this.getAcceptLanguageHeader() || ''),
       });
       this.authenticationService.chained_session = null
