@@ -1,5 +1,6 @@
 # 
 # Translators:
+# Shizol, 2024
 # 05981a52dc258bbec6a48b1f86f28b31, 2017
 # Aron <aron.plotnikowski@cryptolab.net>, 2014
 # Metafrasi <biuro@setara.eu>, 2016,2020-2021
